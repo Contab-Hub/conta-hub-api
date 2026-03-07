@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role    Role     @default(ACCOUNTANT) 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime? 
+
+  fileSystemAuditLogs FileSystemAuditLog[]
+}
+
+enum Role {
+  CLIENT
+  ACCOUNTANT
+  ADMIN
+}
+
+model FileSystemNode {
+  id        String         @id @default(uuid())
+  name      String
+  fileSystemType      FileSystemType
+  type      String?
+  status    String?   
+  storagePath String?
+  mimeType    String?   
+  size        Int?     
+  parentId  String?
+  parent    FileSystemNode?  @relation("FileSystemTree", fields: [parentId], references: [id])
+  children  FileSystemNode[] @relation("FileSystemTree")
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  deletedAt DateTime?
+}
+
+enum FileSystemType {
+  FILE
+  DIRECTORY
+}
+
+model FileSystemAuditLog {
+  id        String   @id @default(uuid())
+  action    String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
