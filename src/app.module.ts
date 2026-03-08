@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
+import { PrismaModule } from './database/prisma.module'
 import { FileSystemModule } from './file-system/file-system.module'
-import { PrismaModule } from './prisma/prisma.module'
 
 @Module({
   imports: [PrismaModule, FileSystemModule],

@@ -14,7 +14,8 @@
       "@/*": ["src/*"],
       "@file-system/*": ["src/file-system/*"],
       "@generated/prisma": ["generated/prisma/client"],
-      "@generated/prisma/*": ["generated/prisma/*"]
+      "@generated/prisma/*": ["generated/prisma/*"],
+      "@database/*": ["src/database/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

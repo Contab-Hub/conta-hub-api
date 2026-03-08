@@ -1,9 +1,12 @@
-import { Module } from '@nestjs/common';
-import { FileSystemService } from './file-system.service';
-import { FileSystemController } from './file-system.controller';
+import { PrismaModule } from '@/database/prisma.module'
+import { Module } from '@nestjs/common'
+import { FileSystemController } from './adapters/in/file-system.controller'
+import { SaveFileUseCase } from './adapters/in/save-file.usecase'
+import { FileSystemRepository } from './adapters/out/file-system.repository'
 
 @Module({
+  imports: [PrismaModule],
   controllers: [FileSystemController],
-  providers: [FileSystemService],
+  providers: [SaveFileUseCase, FileSystemRepository],
 })
 export class FileSystemModule {}
