@@ -1,4 +1,3 @@
-import { PrismaModule } from '@/modules/database/prisma.module'
 import { Module } from '@nestjs/common'
 import { FileSystemController } from './adapters/in/file-system.controller'
 import { SaveFileUseCase } from './adapters/in/save-file.usecase'
@@ -7,7 +6,6 @@ import { SAVE_FILE_USE_CASE } from './ports/in/ISaveFileUseCase'
 import { FILE_SYSTEM_REPOSITORY } from './ports/out/IFileSystemRepository'
 
 @Module({
-  imports: [PrismaModule],
   controllers: [FileSystemController],
   providers: [
     {
