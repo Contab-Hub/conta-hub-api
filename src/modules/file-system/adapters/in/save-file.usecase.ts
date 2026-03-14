@@ -1,9 +1,9 @@
-import { SaveFileInput } from '@/file-system/domain/inputs/save-file.input'
-import { ISaveFileUseCase } from '@/file-system/ports/in/ISaveFileUseCase'
+import { SaveFileInput } from '@/modules/file-system/domain/inputs/save-file.input'
+import { ISaveFileUseCase } from '@/modules/file-system/ports/in/ISaveFileUseCase'
 import {
   FILE_SYSTEM_REPOSITORY,
   IFileSystemRepository,
-} from '@/file-system/ports/out/IFileSystemRepository'
+} from '@/modules/file-system/ports/out/IFileSystemRepository'
 import { Inject, Injectable } from '@nestjs/common'
 
 @Injectable()

@@ -12,10 +12,10 @@
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"],
-      "@file-system/*": ["src/file-system/*"],
+      "@file-system/*": ["src/modules/file-system/*"],
       "@generated/prisma": ["generated/prisma/client"],
       "@generated/prisma/*": ["generated/prisma/*"],
-      "@database/*": ["src/database/*"]
+      "@database/*": ["src/modules/database/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

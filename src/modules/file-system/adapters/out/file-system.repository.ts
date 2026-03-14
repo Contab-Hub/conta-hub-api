@@ -1,7 +1,7 @@
 import { PrismaService } from '@/database/prisma.service'
-import { FileSystemTypeEnum } from '@/file-system/domain/enums/file-system-type-enum'
-import { SaveFileInput } from '@/file-system/domain/inputs/save-file.input'
-import { IFileSystemRepository } from '@/file-system/ports/out/IFileSystemRepository'
+import { FileSystemTypeEnum } from '@/modules/file-system/domain/enums/file-system-type-enum'
+import { SaveFileInput } from '@/modules/file-system/domain/inputs/save-file.input'
+import { IFileSystemRepository } from '@/modules/file-system/ports/out/IFileSystemRepository'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()

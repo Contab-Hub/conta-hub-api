@@ -1,4 +1,4 @@
-import { PrismaModule } from '@/database/prisma.module'
+import { PrismaModule } from '@/modules/database/prisma.module'
 import { Module } from '@nestjs/common'
 import { FileSystemController } from './adapters/in/file-system.controller'
 import { SaveFileUseCase } from './adapters/in/save-file.usecase'
