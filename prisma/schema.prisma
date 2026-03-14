@@ -38,7 +38,7 @@ model FileSystemNode {
   fileSystemType      FileSystemType
   type      String?
   status    String?   
-  storagePath String?
+  storageKey String?
   mimeType    String?   
   size        Int?     
   parentId  String?

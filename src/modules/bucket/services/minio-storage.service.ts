@@ -20,41 +20,41 @@ export class MinioStorageService implements IBucketService {
     this.client = s3Client
   }
 
-  async upload(storagePath: string, body: Buffer, mimeType: string): Promise<string> {
+  async upload(key: string, body: Buffer, mimeType: string): Promise<string> {
     await this.client.send(
       new PutObjectCommand({
         Bucket: this.bucket,
-        Key: storagePath,
+        Key: key,
         Body: body,
         ContentType: mimeType,
       }),
     )
-    return storagePath
+    return key
   }
 
-  async download(storagePath: string): Promise<Buffer> {
+  async download(key: string): Promise<Buffer> {
     const response = await this.client.send(
       new GetObjectCommand({
         Bucket: this.bucket,
-        Key: storagePath,
+        Key: key,
       }),
     )
     return Buffer.from(await response.Body!.transformToByteArray())
   }
 
-  async delete(storagePath: string): Promise<void> {
+  async delete(key: string): Promise<void> {
     await this.client.send(
       new DeleteObjectCommand({
         Bucket: this.bucket,
-        Key: storagePath,
+        Key: key,
       }),
     )
   }
 
-  async getSignedUrl(storagePath: string, expiresInSeconds = 3600): Promise<string> {
+  async getSignedUrl(key: string, expiresInSeconds = 3600): Promise<string> {
     const command = new GetObjectCommand({
       Bucket: this.bucket,
-      Key: storagePath,
+      Key: key,
     })
     return await getSignedUrl(this.client, command, { expiresIn: expiresInSeconds })
   }
