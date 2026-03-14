@@ -1,4 +1,4 @@
-import { SaveFileInput } from '@/file-system/domain/inputs/save-file.input'
+import { SaveFileInput } from '@/modules/file-system/domain/inputs/save-file.input'
 
 export const SAVE_FILE_USE_CASE = 'SAVE_FILE_USE_CASE'
 

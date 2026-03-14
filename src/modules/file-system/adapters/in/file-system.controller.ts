@@ -1,5 +1,8 @@
-import { SaveFileSystemDto } from '@/file-system/dto/save-file-system.dto'
-import { ISaveFileUseCase, SAVE_FILE_USE_CASE } from '@/file-system/ports/in/ISaveFileUseCase'
+import { SaveFileSystemDto } from '@/modules/file-system/dto/save-file-system.dto'
+import {
+  ISaveFileUseCase,
+  SAVE_FILE_USE_CASE,
+} from '@/modules/file-system/ports/in/ISaveFileUseCase'
 import { Body, Controller, Inject, Post, UploadedFile, UseInterceptors } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiBody, ApiConsumes, ApiExtraModels, ApiTags } from '@nestjs/swagger'
