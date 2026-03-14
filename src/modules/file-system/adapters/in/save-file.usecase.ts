@@ -19,6 +19,7 @@ export class SaveFileUseCase implements ISaveFileUseCase {
     @Inject(BUCKET_SERVICE_TOKEN)
     private readonly bucketService: IBucketService,
   ) {}
+
   async execute(file: Express.Multer.File, input: SaveFileInput) {
     const bucketKey = randomUUID()
     await this.bucketService.upload(bucketKey, file.buffer, file.mimetype)

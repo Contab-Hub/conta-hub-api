@@ -1,4 +1,9 @@
+import { CreateFolderDto } from '@/modules/file-system/dto/create-folder.dto'
 import { SaveFileSystemDto } from '@/modules/file-system/dto/save-file-system.dto'
+import {
+  CREATE_FOLDER_USE_CASE,
+  ICreateFolderUseCase,
+} from '@/modules/file-system/ports/in/ICreateFolderUseCase'
 import {
   ISaveFileUseCase,
   SAVE_FILE_USE_CASE,
@@ -14,9 +19,11 @@ export class FileSystemController {
   constructor(
     @Inject(SAVE_FILE_USE_CASE)
     private readonly saveFileUseCase: ISaveFileUseCase,
+    @Inject(CREATE_FOLDER_USE_CASE)
+    private readonly createFolderUseCase: ICreateFolderUseCase,
   ) {}
 
-  @Post()
+  @Post('upload')
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     schema: {
@@ -35,5 +42,10 @@ export class FileSystemController {
   @UseInterceptors(FileInterceptor('file'))
   create(@UploadedFile() file: Express.Multer.File, @Body() saveFileSystemDto: SaveFileSystemDto) {
     return this.saveFileUseCase.execute(file, saveFileSystemDto)
+  }
+
+  @Post('folder')
+  createFolder(@Body() createFolderDto: CreateFolderDto) {
+    return this.createFolderUseCase.execute(createFolderDto)
   }
 }
