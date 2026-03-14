@@ -18,6 +18,10 @@ services:
     container_name: contab-hub-api
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+      MINIO_ENDPOINT: http://minio:9003
+      MINIO_BUCKET: ${MINIO_BUCKET:-contab-hub-bucket}
     ports:
       - '3002:3002'
     depends_on:
