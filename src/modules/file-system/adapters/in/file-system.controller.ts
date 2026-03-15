@@ -1,13 +1,14 @@
 import { CreateFolderDto } from '@/modules/file-system/dto/create-folder.dto'
 import { SaveFileSystemDto } from '@/modules/file-system/dto/save-file-system.dto'
+import { UpdateFileDto } from '@/modules/file-system/dto/update-file.dto'
 import {
   CREATE_FOLDER_USE_CASE,
   ICreateFolderUseCase,
 } from '@/modules/file-system/ports/in/ICreateFolderUseCase'
 import {
-  DOWNLOAD_FILE_USE_CASE,
-  IDownloadFileUseCase,
-} from '@/modules/file-system/ports/in/IDownloadFileUseCase'
+  DELETE_FILE_USE_CASE,
+  IDeleteFileUseCase,
+} from '@/modules/file-system/ports/in/IDeleteFileUseCase'
 import {
   GET_SIGNED_URL_USE_CASE,
   IGetSignedUrlUseCase,
@@ -17,11 +18,17 @@ import {
   SAVE_FILE_USE_CASE,
 } from '@/modules/file-system/ports/in/ISaveFileUseCase'
 import {
+  IUpdateFileSystemNodeUseCase,
+  UPDATE_FILE_SYSTEM_NODE_USE_CASE,
+} from '@/modules/file-system/ports/in/IUpdateFileSystemNodeUseCase'
+import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   Param,
+  Patch,
   Post,
   Query,
   Res,
@@ -41,10 +48,12 @@ export class FileSystemController {
     private readonly saveFileUseCase: ISaveFileUseCase,
     @Inject(CREATE_FOLDER_USE_CASE)
     private readonly createFolderUseCase: ICreateFolderUseCase,
-    @Inject(DOWNLOAD_FILE_USE_CASE)
-    private readonly downloadFileUseCase: IDownloadFileUseCase,
     @Inject(GET_SIGNED_URL_USE_CASE)
     private readonly getSignedUrlUseCase: IGetSignedUrlUseCase,
+    @Inject(DELETE_FILE_USE_CASE)
+    private readonly deleteFileUseCase: IDeleteFileUseCase,
+    @Inject(UPDATE_FILE_SYSTEM_NODE_USE_CASE)
+    private readonly updateFileSystemNodeUseCase: IUpdateFileSystemNodeUseCase,
   ) {}
 
   @Post('upload')
@@ -74,32 +83,29 @@ export class FileSystemController {
   }
 
   @Get('download/:id')
-  async download(@Param('id') id: string, @Res() res: Response) {
-    const { buffer, mimeType, fileName } = await this.downloadFileUseCase.execute(id)
-
-    res.set({
-      'Content-Type': mimeType,
-      'Content-Disposition': `attachment; filename="${encodeURIComponent(fileName)}"`,
-      'Content-Length': buffer.length,
-    })
-
-    res.send(buffer)
-  }
-
-  @Get('signed-url/:id')
   @ApiQuery({
-    name: 'share',
+    name: 'returnUrl',
     required: false,
     type: Boolean,
-    description: 'Redirect to the file if true',
+    description: 'Set to "true" to return the URL instead of redirecting',
   })
-  async signedUrl(
+  async download(
     @Param('id') id: string,
-    @Query('share') isShare: string,
+    @Query('returnUrl') returnUrl: boolean,
     @Res({ passthrough: true }) res: Response,
   ) {
     const signedUrl = await this.getSignedUrlUseCase.execute(id)
 
-    return isShare === 'true' ? res.redirect(signedUrl) : { url: signedUrl }
+    return returnUrl ? { url: signedUrl } : res.redirect(signedUrl)
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.deleteFileUseCase.execute(id)
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateFileDto: UpdateFileDto) {
+    return this.updateFileSystemNodeUseCase.execute(id, updateFileDto)
   }
 }

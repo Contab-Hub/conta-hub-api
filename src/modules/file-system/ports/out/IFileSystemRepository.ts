@@ -2,6 +2,7 @@ import { FileSystemNode } from '@/modules/file-system/domain/entities/file-syste
 import { FileSystemTypeEnum } from '@/modules/file-system/domain/enums/file-system-type-enum'
 import { CreateFolderInput } from '@/modules/file-system/domain/inputs/create-folder.input'
 import { SaveFileInput } from '@/modules/file-system/domain/inputs/save-file.input'
+import { UpdateFileInput } from '@/modules/file-system/domain/inputs/update-file.input'
 
 export const FILE_SYSTEM_REPOSITORY = 'FILE_SYSTEM_REPOSITORY'
 
@@ -17,6 +18,8 @@ export interface IFileSystemRepository {
     parentId: string,
     fileSystemType: FileSystemTypeEnum,
     baseName: string,
+    excludeId?: string,
   ): Promise<string[]>
   findFile(fileId: string): Promise<FileSystemNode | null>
+  updateFile(fileId: string, data: UpdateFileInput): Promise<void>
 }

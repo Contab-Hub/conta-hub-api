@@ -3,6 +3,7 @@ import { FileSystemNode } from '@/modules/file-system/domain/entities/file-syste
 import { FileSystemTypeEnum } from '@/modules/file-system/domain/enums/file-system-type-enum'
 import { CreateFolderInput } from '@/modules/file-system/domain/inputs/create-folder.input'
 import { SaveFileInput } from '@/modules/file-system/domain/inputs/save-file.input'
+import { UpdateFileInput } from '@/modules/file-system/domain/inputs/update-file.input'
 import { IFileSystemRepository } from '@/modules/file-system/ports/out/IFileSystemRepository'
 import { Injectable } from '@nestjs/common'
 
@@ -37,12 +38,15 @@ export class FileSystemRepository implements IFileSystemRepository {
     parentId: string,
     fileSystemType: FileSystemTypeEnum,
     baseName: string,
+    excludeId?: string,
   ): Promise<string[]> {
     const nodes = await this.prismaService.fileSystemNode.findMany({
       where: {
         parentId,
         fileSystemType,
         name: { startsWith: baseName },
+        deletedAt: null,
+        ...(excludeId && { id: { not: excludeId } }),
       },
       select: { name: true },
     })
@@ -51,9 +55,16 @@ export class FileSystemRepository implements IFileSystemRepository {
 
   async findFile(fileId: string): Promise<FileSystemNode | null> {
     const node = await this.prismaService.fileSystemNode.findUnique({
-      where: { id: fileId },
+      where: { id: fileId, deletedAt: null },
     })
 
     return node as FileSystemNode | null
+  }
+
+  async updateFile(fileId: string, data: UpdateFileInput): Promise<void> {
+    await this.prismaService.fileSystemNode.update({
+      where: { id: fileId, deletedAt: null },
+      data,
+    })
   }
 }

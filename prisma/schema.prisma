@@ -5,8 +5,9 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider        = "prisma-client"
+  output          = "../generated/prisma"
+  previewFeatures = ["partialIndexes"]
 }
 
 datasource db {
@@ -24,6 +25,7 @@ model User {
   deletedAt DateTime? 
 
   fileSystemAuditLogs FileSystemAuditLog[]
+  fileSystemPermissionConfigs FileSystemPermissionConfig[]
 }
 
 enum Role {
@@ -48,7 +50,9 @@ model FileSystemNode {
   updatedAt DateTime       @updatedAt
   deletedAt DateTime?
 
-  @@unique([name, parentId, fileSystemType])
+  fileSystemPermissionConfigs FileSystemPermissionConfig[]
+
+  @@unique(fields: [name, parentId, fileSystemType], where: raw("\"deletedAt\" IS NULL"))
 }
 
 enum FileSystemType {
@@ -60,6 +64,16 @@ model FileSystemAuditLog {
   id        String   @id @default(uuid())
   action    String
   userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model FileSystemPermissionConfig {
+  id        String   @id @default(uuid())
+  fileSystemNodeId String
+  userId    String
+  fileSystemNode FileSystemNode @relation(fields: [fileSystemNodeId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime       @default(now())
   updatedAt DateTime       @updatedAt
