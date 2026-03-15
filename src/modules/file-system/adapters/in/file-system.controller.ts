@@ -1,5 +1,6 @@
 import { CreateFolderDto } from '@/modules/file-system/dto/create-folder.dto'
 import { SaveFileSystemDto } from '@/modules/file-system/dto/save-file-system.dto'
+import { UpdateFileDto } from '@/modules/file-system/dto/update-file.dto'
 import {
   CREATE_FOLDER_USE_CASE,
   ICreateFolderUseCase,
@@ -17,12 +18,17 @@ import {
   SAVE_FILE_USE_CASE,
 } from '@/modules/file-system/ports/in/ISaveFileUseCase'
 import {
+  IUpdateFileUseCase,
+  UPDATE_FILE_USE_CASE,
+} from '@/modules/file-system/ports/in/IUpdateFileUseCase'
+import {
   Body,
   Controller,
   Delete,
   Get,
   Inject,
   Param,
+  Patch,
   Post,
   Query,
   Res,
@@ -46,6 +52,8 @@ export class FileSystemController {
     private readonly getSignedUrlUseCase: IGetSignedUrlUseCase,
     @Inject(DELETE_FILE_USE_CASE)
     private readonly deleteFileUseCase: IDeleteFileUseCase,
+    @Inject(UPDATE_FILE_USE_CASE)
+    private readonly updateFileUseCase: IUpdateFileUseCase,
   ) {}
 
   @Post('upload')
@@ -94,5 +102,10 @@ export class FileSystemController {
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.deleteFileUseCase.execute(id)
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateFileDto: UpdateFileDto) {
+    return this.updateFileUseCase.execute(id, updateFileDto)
   }
 }
