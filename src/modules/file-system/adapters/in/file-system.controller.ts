@@ -18,9 +18,9 @@ import {
   SAVE_FILE_USE_CASE,
 } from '@/modules/file-system/ports/in/ISaveFileUseCase'
 import {
-  IUpdateFileUseCase,
-  UPDATE_FILE_USE_CASE,
-} from '@/modules/file-system/ports/in/IUpdateFileUseCase'
+  IUpdateFileSystemNodeUseCase,
+  UPDATE_FILE_SYSTEM_NODE_USE_CASE,
+} from '@/modules/file-system/ports/in/IUpdateFileSystemNodeUseCase'
 import {
   Body,
   Controller,
@@ -52,8 +52,8 @@ export class FileSystemController {
     private readonly getSignedUrlUseCase: IGetSignedUrlUseCase,
     @Inject(DELETE_FILE_USE_CASE)
     private readonly deleteFileUseCase: IDeleteFileUseCase,
-    @Inject(UPDATE_FILE_USE_CASE)
-    private readonly updateFileUseCase: IUpdateFileUseCase,
+    @Inject(UPDATE_FILE_SYSTEM_NODE_USE_CASE)
+    private readonly updateFileSystemNodeUseCase: IUpdateFileSystemNodeUseCase,
   ) {}
 
   @Post('upload')
@@ -106,6 +106,6 @@ export class FileSystemController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateFileDto: UpdateFileDto) {
-    return this.updateFileUseCase.execute(id, updateFileDto)
+    return this.updateFileSystemNodeUseCase.execute(id, updateFileDto)
   }
 }

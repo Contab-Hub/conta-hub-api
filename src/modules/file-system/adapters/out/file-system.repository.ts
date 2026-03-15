@@ -38,6 +38,7 @@ export class FileSystemRepository implements IFileSystemRepository {
     parentId: string,
     fileSystemType: FileSystemTypeEnum,
     baseName: string,
+    excludeId?: string,
   ): Promise<string[]> {
     const nodes = await this.prismaService.fileSystemNode.findMany({
       where: {
@@ -45,6 +46,7 @@ export class FileSystemRepository implements IFileSystemRepository {
         fileSystemType,
         name: { startsWith: baseName },
         deletedAt: null,
+        ...(excludeId && { id: { not: excludeId } }),
       },
       select: { name: true },
     })

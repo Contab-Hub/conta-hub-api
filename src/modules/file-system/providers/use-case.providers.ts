@@ -2,14 +2,14 @@ import { CreateFolderUseCase } from '../adapters/in/create-folder.usecase'
 import { DeleteFileUseCase } from '../adapters/in/delete-file.usecase'
 import { GetSignedUrlUseCase } from '../adapters/in/get-signed-url.usecase'
 import { SaveFileUseCase } from '../adapters/in/save-file.usecase'
-import { UpdateFileUseCase } from '../adapters/in/update-file.usecase'
+import { UpdateFileSystemNodeUseCase } from '../adapters/in/update-file-system-node.usecase'
 import { FileSystemRepository } from '../adapters/out/file-system.repository'
 import { UniqueNameService } from '../domain/services/unique-name.service'
 import { CREATE_FOLDER_USE_CASE } from '../ports/in/ICreateFolderUseCase'
 import { DELETE_FILE_USE_CASE } from '../ports/in/IDeleteFileUseCase'
 import { GET_SIGNED_URL_USE_CASE } from '../ports/in/IGetSignedUrlUseCase'
 import { SAVE_FILE_USE_CASE } from '../ports/in/ISaveFileUseCase'
-import { UPDATE_FILE_USE_CASE } from '../ports/in/IUpdateFileUseCase'
+import { UPDATE_FILE_SYSTEM_NODE_USE_CASE } from '../ports/in/IUpdateFileSystemNodeUseCase'
 import { FILE_SYSTEM_REPOSITORY } from '../ports/out/IFileSystemRepository'
 
 export const fileSystemProviders = [
@@ -31,8 +31,8 @@ export const fileSystemProviders = [
     useClass: DeleteFileUseCase,
   },
   {
-    provide: UPDATE_FILE_USE_CASE,
-    useClass: UpdateFileUseCase,
+    provide: UPDATE_FILE_SYSTEM_NODE_USE_CASE,
+    useClass: UpdateFileSystemNodeUseCase,
   },
   {
     provide: FILE_SYSTEM_REPOSITORY,

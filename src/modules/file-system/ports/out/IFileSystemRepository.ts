@@ -18,6 +18,7 @@ export interface IFileSystemRepository {
     parentId: string,
     fileSystemType: FileSystemTypeEnum,
     baseName: string,
+    excludeId?: string,
   ): Promise<string[]>
   findFile(fileId: string): Promise<FileSystemNode | null>
   updateFile(fileId: string, data: UpdateFileInput): Promise<void>
