@@ -30,4 +30,20 @@ export class FileSystemRepository implements IFileSystemRepository {
     })
     return result.id
   }
+
+  async findExistingNames(
+    parentId: string,
+    fileSystemType: FileSystemTypeEnum,
+    baseName: string,
+  ): Promise<string[]> {
+    const nodes = await this.prismaService.fileSystemNode.findMany({
+      where: {
+        parentId,
+        fileSystemType,
+        name: { startsWith: baseName },
+      },
+      select: { name: true },
+    })
+    return nodes.map((node) => node.name)
+  }
 }
