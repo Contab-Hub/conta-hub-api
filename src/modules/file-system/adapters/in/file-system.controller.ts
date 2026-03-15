@@ -23,12 +23,13 @@ import {
   Inject,
   Param,
   Post,
+  Query,
   Res,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { ApiBody, ApiConsumes, ApiExtraModels, ApiTags } from '@nestjs/swagger'
+import { ApiBody, ApiConsumes, ApiExtraModels, ApiQuery, ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
 
 @ApiTags('File System')
@@ -86,7 +87,19 @@ export class FileSystemController {
   }
 
   @Get('signed-url/:id')
-  getSignedUrl(@Param('id') id: string) {
-    return this.getSignedUrlUseCase.execute(id)
+  @ApiQuery({
+    name: 'share',
+    required: false,
+    type: Boolean,
+    description: 'Redirect to the file if true',
+  })
+  async signedUrl(
+    @Param('id') id: string,
+    @Query('share') isShare: string,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const signedUrl = await this.getSignedUrlUseCase.execute(id)
+
+    return isShare === 'true' ? res.redirect(signedUrl) : { url: signedUrl }
   }
 }
