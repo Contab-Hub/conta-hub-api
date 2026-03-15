@@ -32,7 +32,7 @@ export class SaveFileUseCase implements ISaveFileUseCase {
     const uniqueName = this.uniqueNameService.generateUniqueName(input.name, existingNames)
     const bucketKey = randomUUID()
     await this.bucketService.upload(bucketKey, file.buffer, file.mimetype)
-    return this.fileSystemRepository.saveFile(file.mimetype, bucketKey, {
+    return this.fileSystemRepository.saveFile(file.mimetype, file.size, bucketKey, {
       ...input,
       name: uniqueName,
     })

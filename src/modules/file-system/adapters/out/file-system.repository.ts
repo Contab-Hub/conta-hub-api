@@ -10,11 +10,12 @@ import { Injectable } from '@nestjs/common'
 export class FileSystemRepository implements IFileSystemRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async saveFile(mimeType: string, storageKey: string, input: SaveFileInput) {
+  async saveFile(mimeType: string, size: number, storageKey: string, input: SaveFileInput) {
     const result = await this.prismaService.fileSystemNode.create({
       data: {
         fileSystemType: FileSystemTypeEnum.FILE,
         mimeType,
+        size,
         storageKey,
         ...input,
       },
