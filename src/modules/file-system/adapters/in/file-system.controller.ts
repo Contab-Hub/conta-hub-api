@@ -9,6 +9,10 @@ import {
   IDownloadFileUseCase,
 } from '@/modules/file-system/ports/in/IDownloadFileUseCase'
 import {
+  GET_SIGNED_URL_USE_CASE,
+  IGetSignedUrlUseCase,
+} from '@/modules/file-system/ports/in/IGetSignedUrlUseCase'
+import {
   ISaveFileUseCase,
   SAVE_FILE_USE_CASE,
 } from '@/modules/file-system/ports/in/ISaveFileUseCase'
@@ -38,6 +42,8 @@ export class FileSystemController {
     private readonly createFolderUseCase: ICreateFolderUseCase,
     @Inject(DOWNLOAD_FILE_USE_CASE)
     private readonly downloadFileUseCase: IDownloadFileUseCase,
+    @Inject(GET_SIGNED_URL_USE_CASE)
+    private readonly getSignedUrlUseCase: IGetSignedUrlUseCase,
   ) {}
 
   @Post('upload')
@@ -77,5 +83,10 @@ export class FileSystemController {
     })
 
     res.send(buffer)
+  }
+
+  @Get('signed-url/:id')
+  getSignedUrl(@Param('id') id: string) {
+    return this.getSignedUrlUseCase.execute(id)
   }
 }
