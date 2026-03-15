@@ -39,7 +39,12 @@ export class MinioStorageService implements IBucketService {
         Key: key,
       }),
     )
-    return Buffer.from(await response.Body!.transformToByteArray())
+
+    if (!response.Body) {
+      throw new Error(`Empty response body for bucket key: ${key}`)
+    }
+
+    return Buffer.from(await response.Body.transformToByteArray())
   }
 
   async delete(key: string): Promise<void> {

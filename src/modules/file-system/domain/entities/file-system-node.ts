@@ -9,7 +9,7 @@ export class FileSystemNode implements Entity {
     public createdAt: Date,
     public type?: string,
     public status?: string,
-    public storagePath?: string,
+    public storageKey?: string,
     public mimeType?: string,
     public size?: number,
     public parentId?: string,
