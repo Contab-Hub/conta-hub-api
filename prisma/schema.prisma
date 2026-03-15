@@ -51,6 +51,7 @@ model FileSystemNode {
   deletedAt DateTime?
 
   fileSystemPermissionConfigs FileSystemPermissionConfig[]
+  fileSystemAuditLogs FileSystemAuditLog[]
 
   @@unique(fields: [name, parentId, fileSystemType], where: raw("\"deletedAt\" IS NULL"))
 }
@@ -64,6 +65,8 @@ model FileSystemAuditLog {
   id        String   @id @default(uuid())
   action    String
   userId    String
+  fileSystemNodeId String
+  fileSystemNode FileSystemNode @relation(fields: [fileSystemNodeId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime       @default(now())
   updatedAt DateTime       @updatedAt
