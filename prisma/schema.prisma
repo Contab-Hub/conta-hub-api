@@ -5,8 +5,9 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider        = "prisma-client"
+  output          = "../generated/prisma"
+  previewFeatures = ["partialIndexes"]
 }
 
 datasource db {
@@ -48,7 +49,7 @@ model FileSystemNode {
   updatedAt DateTime       @updatedAt
   deletedAt DateTime?
 
-  @@unique([name, parentId, fileSystemType])
+  @@unique(fields: [name, parentId, fileSystemType], where: raw("\"deletedAt\" IS NULL"))
 }
 
 enum FileSystemType {

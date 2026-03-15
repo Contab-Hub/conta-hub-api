@@ -5,6 +5,10 @@ import {
   ICreateFolderUseCase,
 } from '@/modules/file-system/ports/in/ICreateFolderUseCase'
 import {
+  DELETE_FILE_USE_CASE,
+  IDeleteFileUseCase,
+} from '@/modules/file-system/ports/in/IDeleteFileUseCase'
+import {
   GET_SIGNED_URL_USE_CASE,
   IGetSignedUrlUseCase,
 } from '@/modules/file-system/ports/in/IGetSignedUrlUseCase'
@@ -15,6 +19,7 @@ import {
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   Param,
@@ -39,6 +44,8 @@ export class FileSystemController {
     private readonly createFolderUseCase: ICreateFolderUseCase,
     @Inject(GET_SIGNED_URL_USE_CASE)
     private readonly getSignedUrlUseCase: IGetSignedUrlUseCase,
+    @Inject(DELETE_FILE_USE_CASE)
+    private readonly deleteFileUseCase: IDeleteFileUseCase,
   ) {}
 
   @Post('upload')
@@ -82,5 +89,10 @@ export class FileSystemController {
     const signedUrl = await this.getSignedUrlUseCase.execute(id)
 
     return returnUrl ? { url: signedUrl } : res.redirect(signedUrl)
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.deleteFileUseCase.execute(id)
   }
 }
