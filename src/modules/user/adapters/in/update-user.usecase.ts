@@ -1,6 +1,9 @@
 import { UpdateUserInput } from '@/modules/user/domain/inputs/update-user.input'
 import { PasswordService } from '@/modules/user/domain/services/password.service'
-import { IUpdateUserUseCase, UPDATE_USER_USE_CASE } from '@/modules/user/ports/in/IUpdateUserUseCase'
+import {
+  IUpdateUserUseCase,
+  UPDATE_USER_USE_CASE,
+} from '@/modules/user/ports/in/IUpdateUserUseCase'
 import { IUserRepository, USER_REPOSITORY } from '@/modules/user/ports/out/IUserRepository'
 import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common'
 

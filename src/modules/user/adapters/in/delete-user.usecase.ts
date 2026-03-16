@@ -1,4 +1,7 @@
-import { DELETE_USER_USE_CASE, IDeleteUserUseCase } from '@/modules/user/ports/in/IDeleteUserUseCase'
+import {
+  DELETE_USER_USE_CASE,
+  IDeleteUserUseCase,
+} from '@/modules/user/ports/in/IDeleteUserUseCase'
 import { IUserRepository, USER_REPOSITORY } from '@/modules/user/ports/out/IUserRepository'
 import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 

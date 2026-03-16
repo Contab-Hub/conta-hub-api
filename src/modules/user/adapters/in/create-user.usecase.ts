@@ -1,7 +1,10 @@
 import { UserRoleEnum } from '@/modules/user/domain/enums/user-role.enum'
 import { CreateUserInput } from '@/modules/user/domain/inputs/create-user.input'
 import { PasswordService } from '@/modules/user/domain/services/password.service'
-import { CREATE_USER_USE_CASE, ICreateUserUseCase } from '@/modules/user/ports/in/ICreateUserUseCase'
+import {
+  CREATE_USER_USE_CASE,
+  ICreateUserUseCase,
+} from '@/modules/user/ports/in/ICreateUserUseCase'
 import { IUserRepository, USER_REPOSITORY } from '@/modules/user/ports/out/IUserRepository'
 import { BadRequestException, Inject, Injectable } from '@nestjs/common'
 

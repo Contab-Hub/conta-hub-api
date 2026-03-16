@@ -9,14 +9,8 @@ import {
   DELETE_USER_USE_CASE,
   IDeleteUserUseCase,
 } from '@/modules/user/ports/in/IDeleteUserUseCase'
-import {
-  GET_USER_USE_CASE,
-  IGetUserUseCase,
-} from '@/modules/user/ports/in/IGetUserUseCase'
-import {
-  IListUsersUseCase,
-  LIST_USERS_USE_CASE,
-} from '@/modules/user/ports/in/IListUsersUseCase'
+import { GET_USER_USE_CASE, IGetUserUseCase } from '@/modules/user/ports/in/IGetUserUseCase'
+import { IListUsersUseCase, LIST_USERS_USE_CASE } from '@/modules/user/ports/in/IListUsersUseCase'
 import {
   IUpdateUserUseCase,
   UPDATE_USER_USE_CASE,
