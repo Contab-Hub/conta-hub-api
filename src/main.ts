@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common'
+import { Logger, ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app.module'
@@ -7,6 +7,14 @@ import { environment } from './common/config/environment'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   const logger = new Logger('Bootstrap')
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: true,
+    }),
+  )
 
   const config = new DocumentBuilder()
     .setTitle('ContaHub API')
@@ -21,4 +29,4 @@ async function bootstrap() {
   logger.log(`API running on http://localhost:${environment.PORT}`)
   logger.log(`Swagger docs available at http://localhost:${environment.PORT}/docs`)
 }
-bootstrap()
+void bootstrap()
