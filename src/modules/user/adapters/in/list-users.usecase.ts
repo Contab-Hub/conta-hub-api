@@ -1,4 +1,4 @@
-import { mapToUserResponseDto } from '@/modules/user/adapters/in/get-user.usecase'
+import { mapToUserResponseDto } from '@/modules/user/adapters/in/mappers/user-response.mapper'
 import { ListUsersInput } from '@/modules/user/domain/inputs/list-users.input'
 import { IListUsersUseCase, LIST_USERS_USE_CASE } from '@/modules/user/ports/in/IListUsersUseCase'
 import { IUserRepository, USER_REPOSITORY } from '@/modules/user/ports/out/IUserRepository'

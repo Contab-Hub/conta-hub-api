@@ -1,19 +1,8 @@
-import { User } from '@/modules/user/domain/entities/user'
+import { mapToUserResponseDto } from '@/modules/user/adapters/in/mappers/user-response.mapper'
 import { UserResponseDto } from '@/modules/user/dto/user-response.dto'
 import { GET_USER_USE_CASE, IGetUserUseCase } from '@/modules/user/ports/in/IGetUserUseCase'
 import { IUserRepository, USER_REPOSITORY } from '@/modules/user/ports/out/IUserRepository'
 import { Inject, Injectable, NotFoundException } from '@nestjs/common'
-
-function mapToUserResponseDto(user: User): UserResponseDto {
-  return {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    role: user.role,
-    createdAt: user.createdAt,
-    updatedAt: user.updatedAt,
-  }
-}
 
 @Injectable()
 export class GetUserUseCase implements IGetUserUseCase {
@@ -33,4 +22,4 @@ export class GetUserUseCase implements IGetUserUseCase {
   }
 }
 
-export { GET_USER_USE_CASE, mapToUserResponseDto }
+export { GET_USER_USE_CASE }

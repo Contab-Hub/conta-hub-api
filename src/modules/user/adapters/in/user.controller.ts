@@ -1,5 +1,6 @@
 import { CreateUserDto } from '@/modules/user/dto/create-user.dto'
 import { ListUsersDto } from '@/modules/user/dto/list-users.dto'
+import { LoginDto } from '@/modules/user/dto/login.dto'
 import { UpdateUserDto } from '@/modules/user/dto/update-user.dto'
 import {
   CREATE_USER_USE_CASE,
@@ -11,6 +12,7 @@ import {
 } from '@/modules/user/ports/in/IDeleteUserUseCase'
 import { GET_USER_USE_CASE, IGetUserUseCase } from '@/modules/user/ports/in/IGetUserUseCase'
 import { IListUsersUseCase, LIST_USERS_USE_CASE } from '@/modules/user/ports/in/IListUsersUseCase'
+import { ILoginUseCase, LOGIN_USE_CASE } from '@/modules/user/ports/in/ILoginUseCase'
 import {
   IUpdateUserUseCase,
   UPDATE_USER_USE_CASE,
@@ -26,6 +28,8 @@ export class UserController {
     private readonly createUserUseCase: ICreateUserUseCase,
     @Inject(GET_USER_USE_CASE)
     private readonly getUserUseCase: IGetUserUseCase,
+    @Inject(LOGIN_USE_CASE)
+    private readonly loginUseCase: ILoginUseCase,
     @Inject(LIST_USERS_USE_CASE)
     private readonly listUsersUseCase: IListUsersUseCase,
     @Inject(UPDATE_USER_USE_CASE)
@@ -37,6 +41,11 @@ export class UserController {
   @Post()
   create(@Body() input: CreateUserDto) {
     return this.createUserUseCase.execute(input)
+  }
+
+  @Post('login')
+  login(@Body() input: LoginDto) {
+    return this.loginUseCase.execute(input)
   }
 
   @Get(':id')

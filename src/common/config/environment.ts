@@ -7,4 +7,6 @@ export const environment = {
   MINIO_ACCESS_KEY: process.env.MINIO_ROOT_USER || '',
   MINIO_SECRET_KEY: process.env.MINIO_ROOT_PASSWORD || '',
   MINIO_BUCKET: process.env.MINIO_BUCKET || '',
+  JWT_SECRET: process.env.JWT_SECRET || '',
+  JWT_EXPIRES_IN_SECONDS: Number(process.env.JWT_EXPIRES_IN_SECONDS) || 3600,
 }
